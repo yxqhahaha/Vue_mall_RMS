@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue';
 import ElementUI from 'element-ui';
-<<<<<<< HEAD
-=======
+
 // 导入路由
 import router from './router.js';
 // 导入字体图标
 import './assets/fonts/iconfont.css';
->>>>>>> login
+
 // import VueRouter from 'vue-router'
 import 'element-ui/lib/theme-chalk/index.css';
 import './plugins/element.js';

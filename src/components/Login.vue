@@ -1,9 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div id="app">
-        <!-- 路由占位符 -->
-        <router-view></router-view>
-=======
     <div class="login_container">
         <!-- 登录组件 -->
        <div class="login_box">
@@ -28,20 +23,10 @@
                 </el-form-item>
              </el-form>
        </div>
->>>>>>> login
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-    
-}
-</script>
-
-<style lang="less" scoped>
-// scoped 样式只在当前组件生效
-=======
     window.console.log('login');
 
     export default {
@@ -148,7 +133,4 @@ export default {
             margin-left: 70px;
         }
     }
-
->>>>>>> login
-
 </style>
