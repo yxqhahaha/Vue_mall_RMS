@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    alert("App vue main components");
+    window.console.log("进入App");
 </script>
 
 <style>
