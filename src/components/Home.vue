@@ -12,14 +12,13 @@
             <el-aside unique-opened="true" :width="isCollapse ? '54px' : '200px'">
                 <div class="toggle-button" @click="toggleCollapse">|||</div>
 
-                <!--    一级菜单    -->
-                <el-menu  default-active="activePath" class="el-menu-vertical-demo level2_menu" :collapse="isCollapse" :collapse-transition="false" background-color="#545c64" text-color="#fff"  active-text-color="#409eff">
-                    <!-- 二级菜单 -->
+                <el-menu  default-active="activePath" :router="true" class="el-menu-vertical-demo level2_menu" :collapse="isCollapse" :collapse-transition="false" background-color="#545c64" text-color="#fff"  active-text-color="#409eff">
+                    <!--    一级菜单    -->
                     <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
                         <!-- 一级菜单模板 -->
                         <template slot="title">
                             <!-- 图标 -->
-                            <i :class="iconsObj[item.id]"></i>
+                            <i :class="iconsObj[item.id]" class="icon_menu"></i>
                             <span>{{item.authName}}</span>
                         </template>
                         <!-- 二级菜单 -->
@@ -34,6 +33,11 @@
                     </el-submenu>
                 </el-menu>
             </el-aside>
+            <!-- 右侧内容主体 -->
+            <el-main>
+                <!-- 路由占位符 -->
+                <router-view></router-view>
+            </el-main>
         </el-container>
     </el-container>
 </template>
@@ -130,6 +134,9 @@
                 text-align: center;
                 letter-spacing: 0.2em;
                 cursor: pointer;
+            }
+            .icon_menu {
+                font-size: 14px;
             }
         }
     }
