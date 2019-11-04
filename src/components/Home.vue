@@ -87,7 +87,7 @@
             text-align: center;
             img {
                 float: left;
-                width: 50px;
+                width: 60px;
                 box-shadow: 2px 2px 0 0 #969896;
                 border-radius: 50%;
             }
