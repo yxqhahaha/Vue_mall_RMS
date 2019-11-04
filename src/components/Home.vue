@@ -9,56 +9,28 @@
         <!--    页面主体    -->
         <el-container class="home_container">
             <!--    侧边栏     -->
-            <el-aside width="200px" >
+            <el-aside unique-opened="true" :width="isCollapse ? '54px' : '200px'">
+                <div class="toggle-button" @click="toggleCollapse">|||</div>
 
-                <el-menu  default-active="2" class="el-menu-vertical-demo level2_menu"   background-color="#545c64" text-color="#fff"  active-text-color="#ffd04b">
-                    <el-submenu index="1" >
+                <!--    一级菜单    -->
+                <el-menu  default-active="activePath" class="el-menu-vertical-demo level2_menu" :collapse="isCollapse" :collapse-transition="false" background-color="#545c64" text-color="#fff"  active-text-color="#409eff">
+                    <!-- 二级菜单 -->
+                    <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
+                        <!-- 一级菜单模板 -->
                         <template slot="title">
-                            <i class="el-icon-location"></i>
-                            <span>导航一</span>
+                            <!-- 图标 -->
+                            <i :class="iconsObj[item.id]"></i>
+                            <span>{{item.authName}}</span>
                         </template>
-                        <el-menu-item-group>
-                            <template slot="title">分组一</template>
-                            <el-menu-item index="1-1">选项1</el-menu-item>
-                            <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
-                            <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-submenu index="1-4">
-                            <template slot="title">选项4</template>
-                            <el-menu-item index="1-4-1">选项1</el-menu-item>
-                        </el-submenu>
-                    </el-submenu>
-                    <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">导航二</span>
-                    </el-menu-item>
-                    <el-menu-item index="3" >
-                        <i class="el-icon-document"></i>
-                        <span slot="title">导航三</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">导航四</span>
-                    </el-menu-item>
-                    <el-submenu index="5" >
-                        <template slot="title">
-                            <i class="el-icon-location"></i>
-                            <span>导航五</span>
-                        </template>
-                        <el-menu-item-group>
-                            <template slot="title">分组一</template>
-                            <el-menu-item index="1-1">选项1</el-menu-item>
-                            <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
-                            <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-submenu index="1-4">
-                            <template slot="title">选项4</template>
-                            <el-menu-item index="1-4-1">选项1</el-menu-item>
-                        </el-submenu>
+                        <!-- 二级菜单 -->
+                        <el-menu-item :index="'./' + subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/' + subItem.path)">
+                            <template slot="title">
+                                <!-- 图标 -->
+                                <i class="el-icon-menu"></i>
+                                <span>{{subItem.authName}}</span>
+                            </template>
+                        </el-menu-item>
+
                     </el-submenu>
                 </el-menu>
             </el-aside>
@@ -69,10 +41,47 @@
 <script>
     window.console.log('home');
     export default {
+        data() {
+            return {
+                // 左侧菜单数据
+                menulist: [],
+                iconsObj: {
+                    '125': 'iconfont icon-user',
+                    '103': 'iconfont icon-tijikongjian',
+                    '101': 'iconfont icon-shangpin',
+                    '102': 'iconfont icon-danju',
+                    '145': 'iconfont icon-baobiao'
+                },
+                // 是否折叠
+                isCollapse: false,
+                // 被激活的链接地址
+                activePath: ''
+            }
+        },
+        created() {
+            this.getMenuList();
+            this.activePath = window.sessionStorage.getItem('activePath')
+        },
         methods: {
-            logout(){
+            logout() {
                 window.sessionStorage.clear();
-                this.$router.push('/login');
+                this.$router.push('/login')
+            },
+            // 获取所有的菜单
+            async getMenuList() {
+                const { data: res } = await this.$http.get('menus');
+                if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
+                this.menulist = res.data;
+                window.console.log(res)
+            },
+            // 点击按钮，切换菜单的折叠与展开
+            toggleCollapse() {
+                this.isCollapse = !this.isCollapse
+            },
+            // 保存链接的激活状态
+            saveNavState(activePath) {
+                window.sessionStorage.setItem('activePath', activePath);
+                this.activePath = activePath
             }
         }
     }
@@ -83,9 +92,10 @@
         height: 100%;
         .header {
             padding: 8px 20px;
-            background-color: #2b4b6b;
+            background-color: #383D41;
             text-align: center;
             img {
+                margin-top: -8px;
                 float: left;
                 width: 60px;
                 box-shadow: 2px 2px 0 0 #969896;
@@ -108,9 +118,19 @@
             }
         }
         .el-aside {
-            background-color: #666666;
-
-
+            background-color: #545C64;
+            .el-menu {
+                border-right: none;
+            }
+            .toggle-button {
+                background-color: #4a5064;
+                font-size: 14px;
+                line-height: 24px;
+                color: #fff;
+                text-align: center;
+                letter-spacing: 0.2em;
+                cursor: pointer;
+            }
         }
     }
 

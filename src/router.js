@@ -13,7 +13,6 @@ const router = new Router({
   ]
 });
 
-export default router
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
@@ -28,3 +27,6 @@ router.beforeEach((to, from, next) => {
   if (!tokenStr) return next('/login');
   next()
 });
+
+
+export default router
