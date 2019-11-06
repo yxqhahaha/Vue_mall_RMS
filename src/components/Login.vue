@@ -31,6 +31,23 @@
 
     export default {
         data() {
+            // 验证邮箱规则
+            var checkEmail = (rule, value, cb) => {
+                const regEmail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+                if(regEmail.test(value)){
+                    // 校验通过
+                    return cb();
+                }
+                cb(new Error('请输入正确的邮箱'))
+            };
+            var checkMobile = (rule, value, cb) => {
+                const regMonile = /^[1][3,4,5,7,8][0-9]{9}$/;
+                 if(regMonile.test(value)){
+                    // 校验通过
+                    return cb();
+                }
+                cb(new Error('请输入正确的手机号'))
+            };
             return {
                 // 登录表单数据绑定
                 loginForm: {
@@ -43,11 +60,20 @@
                         { required: true, message: '请输入用户名', trigger: 'blur' },
                         { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
                     ],
-                     password: [
+                    password: [
                         { required: true, message: '请输入密码', trigger: 'blur' },
                         { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
                     ],
-                }
+                    email: [
+                        { required: true, message: '请输入用户邮箱', trigger: 'blur' },
+                        { validator: checkEmail, trigger: 'blur' }
+                    ],
+                    mobile: [
+                        { required: true, message: '请输入用户手机', trigger: 'blur' },
+                        { validator: checkMobile, trigger: 'blur' }
+                    ]
+                },
+
             }
         },
         methods: {

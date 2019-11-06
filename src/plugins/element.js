@@ -27,3 +27,8 @@ Vue.use(MenuItemGroup);
 //  Message需要挂载到全局
 Vue.prototype.$message = Message;
 */
+
+import Vue from 'vue';
+import {   Message,  MessageBox } from 'element-ui'
+Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
