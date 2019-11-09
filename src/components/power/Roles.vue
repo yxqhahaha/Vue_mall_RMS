@@ -91,11 +91,11 @@ export default {
         async getRolesList(){
             const {data : res} = await this.$http.get('roles');
             if(res.meta.status !== 200){
-                return  this.$message.error('获取角色列表失败!')
+                return  this.$message.error('获取角色列表失败!');
             }
 
             this.rolelist = res.data;
-            window.console.log(this.rolelist);
+            // window.console.log(this.rolelist);
         },
         // 根据Id删除对应的权限
         async removeRightById(role, rightId){

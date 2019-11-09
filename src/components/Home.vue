@@ -3,7 +3,7 @@
         <!--    页面头部    -->
         <el-header class="header">
             <img src="../assets/img/sun.jpg">
-            <span>欢迎使用智商后台管理系统</span>
+            <span>欢迎使用天地通用商城后台管理系统</span>
             <el-button type="danger" class="logoutright" @click="logout()" round>退出</el-button>
         </el-header>
         <!--    页面主体    -->
@@ -76,7 +76,7 @@
                 const { data: res } = await this.$http.get('menus');
                 if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
                 this.menulist = res.data;
-                window.console.log(res)
+                // window.console.log(res)
             },
             // 点击按钮，切换菜单的折叠与展开
             toggleCollapse() {

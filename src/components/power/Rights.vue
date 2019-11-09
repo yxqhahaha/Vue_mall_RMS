@@ -46,7 +46,7 @@ export default {
       }
 
       this.rightsList = res.data
-      window.console.log(this.rightsList)
+      // window.console.log(this.rightsList)b
     }
   }
 }

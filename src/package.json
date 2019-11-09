@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "vue-table-with-tree-grid": "^0.2.4"
+  },
+  "devDependencies": {
+    "vue-table-with-tree-grid": "^0.2.4"
+  }
+}

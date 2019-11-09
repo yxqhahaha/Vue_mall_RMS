@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 // 引入所有
 import ElementUI from 'element-ui';
-
+import TreeTable from 'vue-table-with-tree-grid'
 // 导入路由
 import router from './router.js';
 // 导入字体图标
@@ -26,6 +26,8 @@ Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+// 注册为全局可用的组件
+Vue.component('tree-table', TreeTable);
 
 new Vue({
   router,
