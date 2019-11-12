@@ -28,14 +28,13 @@
             <el-tabs v-model="activeName" @tab-click="handleTabClick">
                 <!-- 添加动态参数的面板 -->
                 <el-tab-pane label="动态参数" name="many">
-                    <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible">添加参数</el-button>
-                    <el-table :data="manyTableData" style="width: 100%" border stripe>
+                    <!--  -->
+                    <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</el-button>
+                    <!-- 动态参数表格 -->
+                    <el-table :data="manyTableData" border stripe>
                         <!-- 展开行 -->
-                        <!-- <el-table-column type="expand"  > </el-table-column> -->
-                        
-                        <!-- 动态参数表格 -->
-                        <el-table-column prop="prop" label="label" width="width">
-                            <template slot-scope="scope">
+                        <el-table-column type="expand"  > 
+                             <template slot-scope="scope">
                                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
                                 <!-- 输入的文本框 -->
                                 <el-input class="iput-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)"></el-input>
@@ -43,6 +42,7 @@
                                 <el-button v-else class="iput-new-tag"  size="mini" @click="showInput(scope.row)">+ New Tag</el-button>
                             </template>
                         </el-table-column>
+                       
                         <!-- 索引列 -->
                         <el-table-column type="index"> </el-table-column>
                         <el-table-column label="参数名称" prop="attr_name" ></el-table-column>
@@ -168,7 +168,7 @@ export default {
         async getCateList(){
             // 获取所有商品分类列表
             const { data : res} = await this.$http.get('categories')
-            window.console.log(res);
+            // window.console.log(res);
             if(res.meta.status !== 200) {
                 return this.$message.error("获取数据失败!");
             }
@@ -185,43 +185,43 @@ export default {
              this.getParamsData();
         }, 
         // 获取参数列表的数据
-        async getParamsData(){
-            //  证明选中的是三级分类
-            if(this.selectedCateKeys.length !== 3){
-                this.selectedCateKeys = [];
-                this.manyTableData = []
-                this.onlyTableData = []
-                return 
-            }
-            // 证明选中的是三级分类
-            window.console.log(this.selectedCateKeys);
-            // 根据选择分类的id和当前所处的面板,获取对应的参数${}
-            const { data : res} = await this.$http.get(`categories/${this.cateId}/attributes`, {
-                params : {
-                    sel : this.activeName
-                }
-            })
-            window.console.log(res.meta.status)
-            window.console.log(res.data)
-            if(res.meta.status !== 200) {
-                return this.$message.error("获取参数列表失败!");
-            }
+        async getParamsData() {
+        // 证明选中的不是三级分类
+        if (this.selectedCateKeys.length !== 3) {
+            this.selectedCateKeys = []
+            this.manyTableData = []
+            this.onlyTableData = []
+            return
+        }
 
-            res.data.forEach(item => {
-                window.console.log(item);
-                item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : [];
-                // 控制文本的显示与隐藏
-                item.inputVisible = false;
-                // 文本框中输入的值
-                item.inputValue = '';
-            })
-
-            window.console.log(res.data);
-            if(this.activeName === 'many'){
-                this.manyTableData = res.data.attr_vals;
-            }else{
-                this.onlyTableData = res.data.attr_vals;
+        // 证明选中的是三级分类
+        window.console.log(this.selectedCateKeys)
+        // 根据所选分类的Id，和当前所处的面板，获取对应的参数
+        const { data: res } = await this.$http.get(
+            `categories/${this.cateId}/attributes`,
+            {
+            params: { sel: this.activeName }
             }
+        )
+
+        if (res.meta.status !== 200) {
+            return this.$message.error('获取参数列表失败！')
+        }
+
+        res.data.forEach(item => {
+            item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
+            // 控制文本框的显示与隐藏
+            item.inputVisible = false
+            // 文本框中输入的值
+            item.inputValue = ''
+        })
+
+        window.console.log(res.data)
+        if (this.activeName === 'many') {
+            this.manyTableData = res.data
+        } else {
+            this.onlyTableData = res.data
+        }
         },
         //  监听对话框的关闭事件
          addDialogClosed(){
