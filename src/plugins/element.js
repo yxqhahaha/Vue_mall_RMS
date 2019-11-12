@@ -28,7 +28,14 @@ Vue.use(MenuItemGroup);
 Vue.prototype.$message = Message;
 */
 
+// 导入time组件
+// import Timeline from './timeline/index.js';
+// import TimelineItem from './timeline-item/index.js';
+
 import Vue from 'vue';
 import {Message,  MessageBox} from 'element-ui'
-Vue.prototype.$message = Message
-Vue.prototype.$confirm = MessageBox.confirm
+
+Vue.prototype.$message = Message;
+Vue.prototype.$confirm = MessageBox.confirm;
+// Vue.use(Timeline);
+// Vue.use(TimelineItem);
