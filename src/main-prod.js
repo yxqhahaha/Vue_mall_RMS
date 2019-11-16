@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 // 引入所有
-import ElementUI from 'element-ui';
+// import ElementUI from 'element-ui';
 import TreeTable from 'vue-table-with-tree-grid'
 // 导入路由
 import router from './router.js';
@@ -9,18 +9,19 @@ import router from './router.js';
 import './assets/fonts/iconfont.css';
 
 // import VueRouter from 'vue-router'
-import 'element-ui/lib/theme-chalk/index.css';
-import './plugins/element.js';
+// import 'element-ui/lib/theme-chalk/index.css';
+// 按需导入
+// import './plugins/element.js';
 // 导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
 // 导入nprogress
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+// import 'nprogress/nprogress.css'
 
 // require styles 导入富文本编辑器对应的样式
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+// import 'quill/dist/quill.core.css'
+// import 'quill/dist/quill.snow.css'
+// import 'quill/dist/quill.bubble.css'
 
 // 引入全局样式表
 import './assets/css/global.css';
@@ -62,7 +63,7 @@ Vue.filter('dateFormat', function(originVal){
 // 将富文本编辑器注册为全局可用
 Vue.use(VueQuillEditor, /* { default global options } */)
 
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 // 注册为全局可用的组件
 Vue.component('tree-table', TreeTable);
 

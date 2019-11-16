@@ -9,14 +9,14 @@
          <!-- 卡片视图 -->
         <el-card>
             <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-            <div id="main" style="width: 800px;height:600px;"></div>
+            <div id="main" style="width: 1000px;height:600px;"></div>
         </el-card>
     </div>
 </template>
 <script>
 // <!-- 引入 ECharts 文件 -->
 import echarts from 'echarts';
-import $ from 'jquery'
+// import $ from 'jquery'
 export default {
     data(){
         return{        
@@ -74,8 +74,8 @@ export default {
         // 指定图表的配置项和数据
         // 需要将res.data和options合并
         // 使用刚指定的配置项和数据显示图表。
-        window.console.log($.extend(true,this.options,res.data));
-        window.console.log($.extend(this.options,res.data));
+        // window.console.log($.extend(true,this.options,res.data));
+        // window.console.log($.extend(this.options,res.data));
 
         myChart.setOption($.extend(true,this.options,res.data));
     }
